@@ -34,7 +34,7 @@ public class CourseClient {
     @Value("${ead.api.url.course}")
     String REQUEST_URL_COURSE;
 
-    public Page<CourseDto> getAllCoursesByUser(UUID userId, Pageable pageable){
+    public Page<CourseDto> getAllCoursesByUser(UUID userId, Pageable pageable) {
         List<CourseDto> searchResult = null;
         ResponseEntity<ResponsePageDto<CourseDto>> result = null;
         String url = REQUEST_URL_COURSE + utilsService.createUrlGetAllCoursesByUser(userId, pageable);
@@ -43,20 +43,16 @@ public class CourseClient {
         log.debug("REQUEST URL: {} ", url);
         log.info("REQUEST URL: {} ", url);
         try {
-            ParameterizedTypeReference<ResponsePageDto<CourseDto>> responseType = new ParameterizedTypeReference<ResponsePageDto<CourseDto>>() {};
+            ParameterizedTypeReference<ResponsePageDto<CourseDto>> responseType = new ParameterizedTypeReference<ResponsePageDto<CourseDto>>() {
+            };
             result = restTemplate.exchange(url, HttpMethod.GET, null, responseType);
             searchResult = result.getBody().getContent();
             log.debug("Response Number of Elements: {} ", searchResult.size());
 
-        }catch (UnknownHttpStatusCodeException e){
+        } catch (UnknownHttpStatusCodeException e) {
             log.error("Error request /course {} ", e);
         }
         log.info("Ending request /courses userId {} ", userId);
         return result.getBody();
-    }
-
-    public void deleteUserInCourse(UUID userId) {
-        String url = REQUEST_URL_COURSE + "/courses/users/" + userId;
-        restTemplate.exchange(url, HttpMethod.DELETE, null, String.class);
     }
 }
