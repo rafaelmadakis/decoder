@@ -69,6 +69,7 @@ public class UserModel extends RepresentationModel<UserModel> implements Seriali
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'")
     private LocalDateTime lastUpdateDate;
 
+
     public UserEventDto convertToUserEventDto(){
         var userEventDto = new UserEventDto();
         BeanUtils.copyProperties(this, userEventDto);
@@ -76,6 +77,5 @@ public class UserModel extends RepresentationModel<UserModel> implements Seriali
         userEventDto.setUserStatus(this.getUserStatus().toString());
         return userEventDto;
     }
-
 
 }
