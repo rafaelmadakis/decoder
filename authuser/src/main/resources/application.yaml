@@ -9,7 +9,7 @@ spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/ead-authuser-v2
     username: postgres
-    password: 1234
+    postgress_senha password:
   jpa:
     hibernate:
       ddl-auto: update
@@ -24,7 +24,7 @@ spring:
       enabled: always
 
   rabbitmq:
-    addresses: amqps://xzjinhfw:fZmtuPxxKXaUiMMX44-ns-sh6tQK2bf5@shark.rmq.cloudamqp.com/xzjinhfw
+   em_notas_nome_microservices addresses:
 
 logging:
   level:
