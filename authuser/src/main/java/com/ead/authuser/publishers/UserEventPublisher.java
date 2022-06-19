@@ -7,14 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-/**
- * @Author: Rafael Madakis
- */
 @Component
 public class UserEventPublisher {
 
     @Autowired
-    private RabbitTemplate rabbitTemplate;
+    RabbitTemplate rabbitTemplate;
 
     @Value(value = "${ead.broker.exchange.userEvent}")
     private String exchangeUserEvent;

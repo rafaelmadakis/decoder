@@ -15,62 +15,56 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
+import org.springframework.web.client.HttpStatusCodeException;
 import org.springframework.web.client.RestTemplate;
-import org.springframework.web.client.UnknownHttpStatusCodeException;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-/**
- * @Author: Rafael Madakis
- */
 @Log4j2
 @Component
 public class CourseClient {
 
     @Autowired
-    private RestTemplate restTemplate;
+    RestTemplate restTemplate;
 
     @Autowired
-    private UtilsService utilsService;
+    UtilsService utilsService;
 
     @Value("${ead.api.url.course}")
     String REQUEST_URL_COURSE;
 
-//    @Retry(name = "retryInstance", fallbackMethod = "retryfallback")
-//    @CircuitBreaker(name = "circuitbreakerInstance", fallbackMethod = "circuitbreakerfallback")
+    //@Retry(name = "retryInstance", fallbackMethod = "retryfallback")
     @CircuitBreaker(name = "circuitbreakerInstance")
-    public Page<CourseDto> getAllCoursesByUser(UUID userId, Pageable pageable) {
+    public Page<CourseDto> getAllCoursesByUser(UUID userId, Pageable pageable){
         List<CourseDto> searchResult = null;
-        ResponseEntity<ResponsePageDto<CourseDto>> result = null;
         String url = REQUEST_URL_COURSE + utilsService.createUrlGetAllCoursesByUser(userId, pageable);
-
-
-        log.debug("REQUEST URL: {} ", url);
-        log.info("REQUEST URL: {} ", url);
-        try {
+        log.debug("Request URL: {} ", url);
+        log.info("Request URL: {} ", url);
+        try{
             ParameterizedTypeReference<ResponsePageDto<CourseDto>> responseType = new ParameterizedTypeReference<ResponsePageDto<CourseDto>>() {};
-            result = restTemplate.exchange(url, HttpMethod.GET, null, responseType);
+            ResponseEntity<ResponsePageDto<CourseDto>> result = restTemplate.exchange(url, HttpMethod.GET, null, responseType);
             searchResult = result.getBody().getContent();
             log.debug("Response Number of Elements: {} ", searchResult.size());
-
-        } catch (UnknownHttpStatusCodeException e) {
-            log.error("Error request /course {} ", e);
+        } catch (HttpStatusCodeException e){
+            log.error("Error request /courses {} ", e);
         }
         log.info("Ending request /courses userId {} ", userId);
-        return result.getBody();
+        return new PageImpl<>(searchResult);
     }
 
-    public Page<CourseDto> circuitbreakerfallback(UUID userId, Pageable pageable, Throwable t){
+    public Page<CourseDto> circuitbreakerfallback(UUID userId, Pageable pageable, Throwable t) {
         log.error("Inside circuit breaker fallback, cause - {}", t.toString());
         List<CourseDto> searchResult = new ArrayList<>();
         return new PageImpl<>(searchResult);
     }
 
     public Page<CourseDto> retryfallback(UUID userId, Pageable pageable, Throwable t) {
-        log.error("Inside retry retryfallback, cause - {} ", t.toString());
+        log.error("Inside retry retryfallback, cause - {}", t.toString());
         List<CourseDto> searchResult = new ArrayList<>();
-        return  new PageImpl<>(searchResult);
+        return new PageImpl<>(searchResult);
     }
+
+
 }

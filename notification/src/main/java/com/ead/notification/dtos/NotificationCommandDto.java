@@ -2,15 +2,10 @@ package com.ead.notification.dtos;
 
 import java.util.UUID;
 
-/**
- * @Author: Rafael Madakis
- */
 public class NotificationCommandDto {
 
     private String title;
-
     private String message;
-
     private UUID userId;
 
     public String getTitle() {

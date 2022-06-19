@@ -7,9 +7,6 @@ import org.springframework.data.domain.Pageable;
 import java.util.Optional;
 import java.util.UUID;
 
-/**
- * @Author: Rafael Madakis
- */
 public interface NotificationService {
     NotificationModel saveNotification(NotificationModel notificationModel);
 

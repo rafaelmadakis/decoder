@@ -16,9 +16,6 @@ import org.springframework.stereotype.Component;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 
-/**
- * @Author: Rafael Madakis
- */
 @Component
 public class NotificationConsumer {
 
@@ -33,11 +30,12 @@ public class NotificationConsumer {
             exchange = @Exchange(value = "${ead.broker.exchange.notificationCommandExchange}", type = ExchangeTypes.TOPIC, ignoreDeclarationExceptions = "true"),
             key = "${ead.broker.key.notificationCommandKey}")
     )
-    public void listen(@Payload NotificationCommandDto notificationCommandDto){
+    public void listen(@Payload NotificationCommandDto notificationCommandDto) {
         var notificationModel = new NotificationModel();
         BeanUtils.copyProperties(notificationCommandDto, notificationModel);
         notificationModel.setCreationDate(LocalDateTime.now(ZoneId.of("UTC")));
         notificationModel.setNotificationStatus(NotificationStatus.CREATED);
         notificationService.saveNotification(notificationModel);
     }
+
 }

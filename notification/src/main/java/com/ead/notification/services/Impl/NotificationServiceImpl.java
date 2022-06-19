@@ -1,4 +1,4 @@
-package com.ead.notification.services.Impl;
+package com.ead.notification.services.impl;
 
 import com.ead.notification.enums.NotificationStatus;
 import com.ead.notification.models.NotificationModel;
@@ -11,13 +11,10 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 import java.util.UUID;
 
-/**
- * @Author: Rafael Madakis
- */
 @Service
 public class NotificationServiceImpl implements NotificationService {
 
-    NotificationRepository notificationRepository;
+    final NotificationRepository notificationRepository;
 
     public NotificationServiceImpl(NotificationRepository notificationRepository) {
         this.notificationRepository = notificationRepository;
@@ -30,11 +27,11 @@ public class NotificationServiceImpl implements NotificationService {
 
     @Override
     public Page<NotificationModel> findAllNotificationsByUser(UUID userId, Pageable pageable) {
-        return notificationRepository.findAllByUserIdAndNotificationStatus(userId, NotificationStatus.CREATED, pageable);
+        return notificationRepository.findAllByUserIdAndNotificationStatus(userId, NotificationStatus.CREATED,pageable);
     }
 
     @Override
     public Optional<NotificationModel> findByNotificationIdAndUserId(UUID notificationId, UUID userId) {
-        return notificationRepository.findByNotificationIdAndUserId(notificationId,userId);
+        return notificationRepository.findByNotificationIdAndUserId(notificationId, userId);
     }
 }

@@ -11,14 +11,11 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-/**
- * @Author: Rafael Madakis
- */
 @Configuration
 public class RabbitmqConfig {
 
     @Autowired
-    private CachingConnectionFactory cachingConnectionFactory;
+    CachingConnectionFactory cachingConnectionFactory;
 
     @Value(value = "${ead.broker.exchange.userEvent}")
     private String exchangeUserEvent;
@@ -37,9 +34,8 @@ public class RabbitmqConfig {
         return new Jackson2JsonMessageConverter(objectMapper);
     }
 
-    //produtor
     @Bean
-    public FanoutExchange fanoutUserEvent(){
+    public FanoutExchange fanoutUserEvent() {
         return new FanoutExchange(exchangeUserEvent);
     }
 

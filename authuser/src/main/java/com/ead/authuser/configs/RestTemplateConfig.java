@@ -8,17 +8,15 @@ import org.springframework.web.client.RestTemplate;
 
 import java.time.Duration;
 
-/**
- * @Author: Rafael Madakis
- */
 @Configuration
 public class RestTemplateConfig {
 
-    static  final int TIMEOUT = 5000;
+    static final int TIMEOUT = 5000;
 
     @LoadBalanced
     @Bean
     public RestTemplate restTemplate(RestTemplateBuilder builder) {
+        // Do any additional configuration here
         return builder
                 .setConnectTimeout(Duration.ofMillis(TIMEOUT))
                 .setReadTimeout(Duration.ofMillis(TIMEOUT))

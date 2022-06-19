@@ -5,19 +5,15 @@ import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-/**
- * @Author: Rafael Madakis
- */
 @RestController
 @RefreshScope
 public class RefreshScopeController {
 
-    @Value("${authuser.refreshcope.name}")
+    @Value("${authuser.refreshscope.name}")
     private String name;
 
     @RequestMapping("/refreshscope")
-    public String refreshScope(){
+    public String refreshscope() {
         return this.name;
     }
-
 }

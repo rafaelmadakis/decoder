@@ -1,7 +1,6 @@
 package com.ead.authuser.services.impl;
 
 import com.ead.authuser.clients.CourseClient;
-
 import com.ead.authuser.enums.ActionType;
 import com.ead.authuser.models.UserModel;
 import com.ead.authuser.publishers.UserEventPublisher;
@@ -18,10 +17,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-/**
- * @Author: Rafael Madakis
- */
-
 @Service
 public class UserServiceImpl implements UserService {
 
@@ -29,13 +24,10 @@ public class UserServiceImpl implements UserService {
     UserRepository userRepository;
 
     @Autowired
-    private CourseClient courseClient;
-
+    CourseClient courseClient;
 
     @Autowired
-    private UserEventPublisher userEventPublisher;
-
-
+    UserEventPublisher userEventPublisher;
 
     @Override
     public List<UserModel> findAll() {
@@ -47,16 +39,15 @@ public class UserServiceImpl implements UserService {
         return userRepository.findById(userId);
     }
 
+    @Transactional
     @Override
     public void delete(UserModel userModel) {
         userRepository.delete(userModel);
     }
 
-
     @Override
     public UserModel save(UserModel userModel) {
-        userRepository.save(userModel);
-        return userModel;
+        return userRepository.save(userModel);
     }
 
     @Override
@@ -76,11 +67,10 @@ public class UserServiceImpl implements UserService {
 
     @Transactional
     @Override
-    public UserModel saveUser(UserModel userModel) {
+    public UserModel saveUser(UserModel userModel){
         userModel = save(userModel);
         userEventPublisher.publishUserEvent(userModel.convertToUserEventDto(), ActionType.CREATE);
         return userModel;
-
     }
 
     @Transactional

@@ -4,9 +4,6 @@ import com.ead.notification.enums.NotificationStatus;
 
 import javax.validation.constraints.NotNull;
 
-/**
- * @Author: Rafael Madakis
- */
 public class NotificationDto {
 
     @NotNull

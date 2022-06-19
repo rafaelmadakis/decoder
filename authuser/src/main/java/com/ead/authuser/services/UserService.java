@@ -9,12 +9,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-/**
- * @Author: Rafael Madakis
- */
 public interface UserService {
     List<UserModel> findAll();
-
     Optional<UserModel> findById(UUID userId);
 
     void delete(UserModel userModel);
@@ -31,4 +27,5 @@ public interface UserService {
     void deleteUser(UserModel userModel);
     UserModel updateUser(UserModel userModel);
     UserModel updatePassword(UserModel userModel);
+
 }

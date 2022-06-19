@@ -15,9 +15,6 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Optional;
 
-/**
- * @Author: Rafael Madakis
- */
 @Log4j2
 @RestController
 @CrossOrigin(origins = "*", maxAge = 3600)
@@ -25,21 +22,20 @@ import java.util.Optional;
 public class InstructorController {
 
     @Autowired
-    private UserService userService;
+    UserService userService;
 
     @PostMapping("/subscription")
-    public ResponseEntity<Object> saveSubscriptionInstructor(@RequestBody @Valid InstructorDto instructorDto){
+    public ResponseEntity<Object> saveSubscriptionInstructor(@RequestBody @Valid InstructorDto instructorDto) {
         Optional<UserModel> userModelOptional = userService.findById(instructorDto.getUserId());
-        if (!userModelOptional.isPresent()){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
-        }else{
+        if(!userModelOptional.isPresent()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found.");
+        }else {
             var userModel = userModelOptional.get();
             userModel.setUserType(UserType.INSTRUCTOR);
             userModel.setLastUpdateDate(LocalDateTime.now(ZoneId.of("UTC")));
             userService.updateUser(userModel);
             return ResponseEntity.status(HttpStatus.OK).body(userModel);
         }
-
     }
 
 }
