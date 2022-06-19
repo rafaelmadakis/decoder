@@ -9,7 +9,7 @@ spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/ead-authuser
     username: postgres
-    password: 1234
+    password: 
   jpa:
     hibernate:
       ddl-auto: update
