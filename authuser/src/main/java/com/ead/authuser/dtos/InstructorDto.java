@@ -5,9 +5,6 @@ import lombok.Data;
 import javax.validation.constraints.NotNull;
 import java.util.UUID;
 
-/**
- * @Author: Rafael Madakis
- */
 @Data
 public class InstructorDto {
 

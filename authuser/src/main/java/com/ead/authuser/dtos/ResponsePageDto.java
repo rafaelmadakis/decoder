@@ -9,10 +9,7 @@ import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
-/**
- * @Author: Rafael Madakis
- */
-public class ResponsePageDto<T>  extends PageImpl<T> {
+public class ResponsePageDto<T> extends PageImpl<T> {
 
     @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
     public ResponsePageDto(@JsonProperty("content") List<T> content,
@@ -28,8 +25,6 @@ public class ResponsePageDto<T>  extends PageImpl<T> {
 
         super(content, PageRequest.of(number, size), totalElements);
     }
-
-
 
     public ResponsePageDto(List<T> content, Pageable pageable, long total) {
         super(content, pageable, total);
